@@ -19,12 +19,12 @@ function RootLayout() {
           <div className="flex md:order-2">
             <Link to="login">
               <Button className="border-none" color="light">
-                Login
+                Sign In
               </Button>
             </Link>
             <Link to="register">
               <Button className="bg-blue-600" color="blue">
-                Sign In
+                Sign Up
               </Button>
             </Link>
             <Navbar.Toggle />

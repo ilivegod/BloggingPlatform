@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./index.css";
 import App from "./App";
+
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import BlogsPage from "./pages/blog/BlogsPage";
 import RootLayout from "./pages/layout/RootLayout";
 import NotFound from "./pages/NotFound";
 import BlogDetailPage from "./pages/blog/BlogDetailPage";
+import BlogCreationPage from "./pages/blog/BlogCreationPage";
 
 const root = document.getElementById("root");
 
@@ -26,6 +28,8 @@ ReactDOM.createRoot(root).render(
           <Route path="/" element={<App />} />
           <Route path="blogs" element={<BlogsPage />} />
           <Route path="BlogDetailPage/:blogId" element={<BlogDetailPage />} />
+          <Route path="profilePage/:userId" element={<BlogDetailPage />} />
+          <Route path="createBlog" element={<BlogCreationPage />} />
         </Route>
 
         <Route path="login" element={<Login />} />

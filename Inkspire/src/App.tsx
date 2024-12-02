@@ -3,9 +3,16 @@ import "./App.css";
 import { Button } from "flowbite-react";
 import { Carousel } from "flowbite-react";
 import { Footer } from "flowbite-react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
+import supabase from "./config/supabaseClient";
 
 function App() {
+  const [fetchError, setFetchError] = useState(null);
+  const [blogPost, setblogPost] = useState(null);
+
+  console.log(supabase);
+
   return (
     <>
       <div className="md:mt-2 max-w-[1280px] mx-auto px-8 text-center">
@@ -20,9 +27,11 @@ function App() {
               Turn your ideas into impactful stories and reach readers
               worldwide. Your journey starts here.
             </p>
-            <Button className="bg-gray-900 hover:bg-gray-100" size="sm">
-              Start Writing
-            </Button>
+            <Link to="createBlog">
+              <Button className="bg-gray-900 hover:bg-gray-100" size="sm">
+                Start Writing
+              </Button>
+            </Link>
           </div>
         </header>
         {/* Carousel Section with image  */}
