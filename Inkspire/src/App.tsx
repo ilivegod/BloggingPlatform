@@ -6,10 +6,22 @@ import { Footer } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import supabase from "./config/supabaseClient";
+import Account from "./pages/profile/profilePage";
 
 function App() {
   const [fetchError, setFetchError] = useState(null);
   const [blogPost, setblogPost] = useState(null);
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
 
   console.log(supabase);
 

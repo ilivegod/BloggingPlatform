@@ -3,7 +3,8 @@ import { Button, Checkbox, Label, Spinner, TextInput } from "flowbite-react";
 import { Auth } from "@supabase/auth-ui-react";
 import supabase from "../../config/supabaseClient";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { Link } from "react-router";
+import { Link, Router, useNavigate } from "react-router";
+
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,13 +20,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function signInUser() {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-    console.log(data, error);
-  }
+  const navigate = useNavigate();
+
+  // async function signInUser() {
+  //   const { data, error } = await supabase.auth.signInWithPassword({
+  //     email: email,
+  //     password: password,
+  //   });
+  //   console.log(data, error);
+  // }
 
   const {
     register,
@@ -38,12 +41,41 @@ export default function Login() {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setEmail(data.email);
-    setPassword(data.password);
+    try {
+      const { data: supabaseData, error: supabaseError } =
+        await supabase.auth.signInWithPassword({
+          email: data.email,
+          password: data.password,
+        });
 
-    signInUser();
-
-    console.log(data);
+      if (supabaseError) {
+        // Handle specific Supabase errors here
+        if (supabaseError.message.includes("Invalid email")) {
+          setError("email", {
+            type: "error",
+            message: supabaseError.message,
+          });
+        } else if (supabaseError.message.includes("Incorrect password")) {
+          setError("password", {
+            type: "error",
+            message: "Incorrect password",
+          });
+        } else {
+          setError("root", {
+            message: supabaseError.message,
+          });
+        }
+      } else {
+        navigate("/");
+        console.log(data);
+        console.log("data and error:", supabaseData, supabaseError);
+      }
+    } catch (error) {
+      // Handle other unexpected errors
+      setError("root", {
+        message: "An unexpected error occurred",
+      });
+    }
   };
 
   // try {
@@ -67,7 +99,7 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen bg-blue-200">
       <div className="bg-white shadow-sm rounded-lg border border-gray-100 w-96 p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
-          Sign Up
+          Sign In
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Username Input */}
@@ -139,8 +171,8 @@ export default function Login() {
         </p>
         <p className="text-sm text-gray-600 text-center mt-4">
           Don't have an account yet?{" "}
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Sign in
+          <Link to="/register" className="text-blue-500 hover:underline">
+            Sign up
           </Link>
         </p>
       </div>

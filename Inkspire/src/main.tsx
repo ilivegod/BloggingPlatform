@@ -11,6 +11,8 @@ import RootLayout from "./pages/layout/RootLayout";
 import NotFound from "./pages/NotFound";
 import BlogDetailPage from "./pages/blog/BlogDetailPage";
 import BlogCreationPage from "./pages/blog/BlogCreationPage";
+import Account from "./pages/profile/profilePage";
+import ProfileLander from "./pages/profile/profileLander";
 
 const root = document.getElementById("root");
 
@@ -28,8 +30,9 @@ ReactDOM.createRoot(root).render(
           <Route path="/" element={<App />} />
           <Route path="blogs" element={<BlogsPage />} />
           <Route path="BlogDetailPage/:blogId" element={<BlogDetailPage />} />
-          <Route path="profilePage/:userId" element={<BlogDetailPage />} />
+          <Route path="profilePage/:userId" element={<Account />} />
           <Route path="createBlog" element={<BlogCreationPage />} />
+          <Route path="profileLander" element={<ProfileLander />} />
         </Route>
 
         <Route path="login" element={<Login />} />
