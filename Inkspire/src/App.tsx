@@ -1,50 +1,19 @@
-// import { Link } from "react-router";
 import "./App.css";
 import { Button } from "flowbite-react";
 import { Carousel } from "flowbite-react";
 import { Footer } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import supabase from "./config/supabaseClient";
-import Account from "./pages/profile/profilePage";
+
+import Account from "./pages/profilePage";
 import axios from "axios";
-import CountriesList from "./components/CountriesList";
 
 function App() {
   const [fetchError, setFetchError] = useState(null);
   const [blogPost, setblogPost] = useState(null);
-  // const [capital, setCapital] = useState<any>(null);
+
   const [countryData, setCountryData] = useState<any>([]);
   const [session, setSession] = useState<any>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
-
-  //console.log(supabase);
-
-  const BASE_URL = "https://restcountries.com/v3.1/";
-
-  const fetchCountriesData = async () => {
-    const res = await axios.get(BASE_URL + "all");
-
-    console.log(res.data);
-    setCountryData(res.data);
-
-    return res.data;
-  };
-
-  console.log(countryData);
-
-  useEffect(() => {
-    fetchCountriesData();
-  }, []);
 
   return (
     <>
@@ -125,13 +94,7 @@ function App() {
         {/*  Interview Section */}
 
         <h1 className="text-3xl font-bold mb-8">interview</h1>
-        {countryData.map((country: any) => (
-          <CountriesList
-            country={country.name.common}
-            capital={country.capital}
-          />
-        ))}
-        {/*   ending */}
+
         {/* Blog Posts Section */}
         <Footer container>
           <div className="w-full text-center">

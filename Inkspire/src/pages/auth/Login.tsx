@@ -1,8 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, Checkbox, Label, Spinner, TextInput } from "flowbite-react";
-import { Auth } from "@supabase/auth-ui-react";
-import supabase from "../../config/supabaseClient";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
+
 import { Link, Router, useNavigate } from "react-router";
 
 import { useState } from "react";
@@ -22,14 +20,6 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  // async function signInUser() {
-  //   const { data, error } = await supabase.auth.signInWithPassword({
-  //     email: email,
-  //     password: password,
-  //   });
-  //   console.log(data, error);
-  // }
-
   const {
     register,
     handleSubmit,
@@ -40,60 +30,9 @@ export default function Login() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    try {
-      const { data: supabaseData, error: supabaseError } =
-        await supabase.auth.signInWithPassword({
-          email: data.email,
-          password: data.password,
-        });
-
-      if (supabaseError) {
-        // Handle specific Supabase errors here
-        if (supabaseError.message.includes("Invalid email")) {
-          setError("email", {
-            type: "error",
-            message: supabaseError.message,
-          });
-        } else if (supabaseError.message.includes("Incorrect password")) {
-          setError("password", {
-            type: "error",
-            message: "Incorrect password",
-          });
-        } else {
-          setError("root", {
-            message: supabaseError.message,
-          });
-        }
-      } else {
-        navigate("/");
-        console.log(data);
-        console.log("data and error:", supabaseData, supabaseError);
-      }
-    } catch (error) {
-      // Handle other unexpected errors
-      setError("root", {
-        message: "An unexpected error occurred",
-      });
-    }
+  const onSubmit = () => {
+    console.log("submitted");
   };
-
-  // try {
-  //   const { data: supabaseData, error: supabaseError } =
-  //     await supabase.auth.signInWithPassword({
-  //       email: data.email,
-  //       password: data.password,
-  //     });
-  //   throw new Error();
-
-  //   console.log(supabaseData, data);
-  // } catch (error) {
-  //   setError("root", {
-  //     message:
-  //       error instanceof Error ? error.message : "An unknown error occurred",
-  //   });
-  // }
-  // console.log(watch("example")); // watch input value by passing the name of it
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-200">

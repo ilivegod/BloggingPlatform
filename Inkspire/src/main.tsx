@@ -7,12 +7,12 @@ import App from "./App";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import BlogsPage from "./pages/blog/BlogsPage";
-import RootLayout from "./pages/layout/RootLayout";
+import RootLayout from "./components/layout/RootLayout";
 import NotFound from "./pages/NotFound";
 import BlogDetailPage from "./pages/blog/BlogDetailPage";
-import BlogCreationPage from "./pages/blog/BlogCreationPage";
-import Account from "./pages/profile/profilePage";
-import ProfileLander from "./pages/profile/profileLander";
+import BlogCreationPage from "./pages/blog/BlogCreation";
+import Account from "./pages/profilePage";
+import ProfileLander from "./pages/profileLander";
 
 const root = document.getElementById("root");
 

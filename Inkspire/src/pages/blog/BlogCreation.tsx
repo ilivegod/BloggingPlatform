@@ -1,27 +1,11 @@
 import { useEffect, useState } from "react";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import supabase from "../../config/supabaseClient";
+
 import { Link } from "react-router";
 import { Button } from "flowbite-react";
-import Account from "../profile/profilePage";
+import Account from "../profilePage";
 
-function BlogCreationPage() {
+function BlogCreation() {
   const [session, setSession] = useState<any>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   if (!session) {
     return (
@@ -48,4 +32,4 @@ function BlogCreationPage() {
   }
 }
 
-export default BlogCreationPage;
+export default BlogCreation;
